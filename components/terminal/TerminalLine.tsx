@@ -1,4 +1,5 @@
 import { TerminalEntry } from "@/lib/types"
+import { AsciLine, ColoredKeyLine, CommandLine, EmptyLine, SystemLine, TableLine } from "./lines";
 
 type TerminalLineProps = {
     entry: TerminalEntry;
@@ -10,56 +11,21 @@ export function TerminalLine ({
     
     switch (entry.type) {
         case "system":
-            return (
-                <div>
-                    {entry.content.line}
-                </div>
-            )
+            return <SystemLine line={entry.content.line}/>
         case "command":
-            return (
-                <div>{entry.content.prompt}</div>
-            )
+            return <CommandLine prompt={entry.content.prompt}/>
         case "asci":
-            return (
-                entry.content.lines.map((line, index) => (
-                        <div key={index} style={{ whiteSpace: "pre" }} className="max-w-full overflow-x-hidden">
-                            {line}
-                        </div>
-                    ))
-            )
+            return <AsciLine lines={entry.content.lines}/>
+        case "table":
+            return <TableLine columns={entry.content.columns}/>
         case "empty_line":
-            return (
-                Array.from({length: entry.content.count}, (_, i) => i).map((i) => (
-                    <div key={i}>&nbsp;</div>
-                ))
-            )
+            return <EmptyLine count={entry.content.count}/>
         case "success":
-            return (
-                <div>
-                    <span className="text-[#62FF86]">
-                        {entry.content.key}
-                    </span>
-                    {entry.content.success ? `: ${entry.content.success}` : ``}
-                </div>
-            )
+            return <ColoredKeyLine type="success" placeholder={entry.content.key} message={entry.content.success}/>
         case "warning":
-            return (
-                <div>
-                    <span className="text-[#FFBD2E]">
-                        {entry.content.key}
-                    </span>
-                    {entry.content.warning ? `: ${entry.content.warning}` : ``}
-                </div>
-            )
+            return <ColoredKeyLine type="warning" placeholder={entry.content.key} message={entry.content.warning}/>
         case "error":
-            return (
-                <div>
-                    <span className="text-[#FF5F56]">
-                        {entry.content.key}
-                    </span>
-                    {entry.content.error ? `: ${entry.content.error}` : ``}
-                </div>
-            )
+            return <ColoredKeyLine type="error" placeholder={entry.content.key} message={entry.content.error}/>
         case "link":
             return (
                 <div className="text-[#4FC3F7]">

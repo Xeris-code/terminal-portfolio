@@ -7,6 +7,7 @@ export type TerminalOutput = {
     "link": { link: string },
     "asci": { lines: string[] },
     "empty_line": { count: number },
+    "table": {columns: {left: string, right: string}[]}
 }
 
 export type TerminalEntry = {
