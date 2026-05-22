@@ -1,0 +1,62 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Neon X Logo</title>
+
+  <defs>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.384
+                0 0 0 0 1
+                0 0 0 0 0.525
+                0 0 0 0.85 0" result="greenGlow"/>
+      <feMerge>
+        <feMergeNode in="greenGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <linearGradient id="xGradient" x1="96" y1="80" x2="416" y2="432" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A7FF5A"/>
+      <stop offset="0.45" stop-color="#62FF86"/>
+      <stop offset="1" stop-color="#27C93F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="72" fill="#050805"/>
+
+  <g opacity="0.25">
+    <path d="M64 128H448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M64 192H448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M64 256H448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M64 320H448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M64 384H448" stroke="#62FF86" stroke-width="1"/>
+
+    <path d="M128 64V448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M192 64V448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M256 64V448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M320 64V448" stroke="#62FF86" stroke-width="1"/>
+    <path d="M384 64V448" stroke="#62FF86" stroke-width="1"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <path d="M122 104H190L256 198L322 104H390L292 244L400 408H330L256 294L182 408H112L220 244L122 104Z"
+      stroke="url(#xGradient)"
+      stroke-width="18"
+      stroke-linejoin="round"/>
+
+    <path d="M166 126L240 234" stroke="#E5FFE7" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+    <path d="M346 126L272 234" stroke="#E5FFE7" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+    <path d="M162 386L240 274" stroke="#E5FFE7" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+    <path d="M350 386L272 274" stroke="#E5FFE7" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+
+    <path d="M146 92H220" stroke="#62FF86" stroke-width="6" stroke-linecap="round"/>
+    <path d="M292 92H366" stroke="#62FF86" stroke-width="6" stroke-linecap="round"/>
+    <path d="M146 420H220" stroke="#62FF86" stroke-width="6" stroke-linecap="round"/>
+    <path d="M292 420H366" stroke="#62FF86" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="102" cy="100" r="3" fill="#62FF86"/>
+  <circle cx="418" cy="122" r="2.5" fill="#62FF86"/>
+  <circle cx="92" cy="402" r="2.5" fill="#62FF86"/>
+  <circle cx="430" cy="390" r="3" fill="#62FF86"/>
+</svg>
