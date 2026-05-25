@@ -1,3 +1,4 @@
+import { useTerminalInput } from "@/lib/terminal";
 import { useEffect, useState } from "react";
 
 type TerminalInputProps = {
@@ -10,32 +11,16 @@ export function TerminalInput ({
     onCommand
 }: TerminalInputProps){
 
-    const [input, setInput] = useState<string>("")  
-    const [historyIndex, setHistoryIndex] = useState<number>(commandHistory.length)
-    const [currentCommand, setCurrentCommand] = useState<string>("")
+    const {
+        input, setInput,
+        setCurrentCommand,
+        setHistoryIndex,
+        handleKeyDown
+    } = useTerminalInput(commandHistory)
 
-    function handleNextCommand(){
-        if (commandHistory.length === 0){
-            return
-        };
-        const newIndex = historyIndex + 1 > commandHistory.length ? commandHistory.length : historyIndex + 1
-        setHistoryIndex(newIndex)
-        if (newIndex === commandHistory.length){
-            setInput(currentCommand)
-        } else {
-            setInput(commandHistory[newIndex])
-        }
-    }
-
-    function handlePreviousCommand () {
-        if (commandHistory.length === 0){
-            return
-        };
-        const newIndex = historyIndex - 1 < 0 ? historyIndex : historyIndex - 1
-        setHistoryIndex(newIndex);
-        setInput(commandHistory[newIndex]);
-
-    }
+    useEffect (()=>{
+        setHistoryIndex(commandHistory.length)
+    }, [commandHistory.length])
 
     return (
         <div className="border-t main-border-color text-[12px]">
@@ -44,35 +29,7 @@ export function TerminalInput ({
                     <input
                         value={input}
                         className="w-full focus:outline-none"
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter"){
-                                if (!input) {
-                                    return;
-                                };
-                                onCommand(input);
-                                setInput("");
-                                setCurrentCommand("")
-                                setHistoryIndex(commandHistory.length + 1)
-                            }
-                            if (e.ctrlKey && e.key === "l") {
-                                e.preventDefault()
-                                setInput("")
-                                setCurrentCommand("")
-                                setHistoryIndex(commandHistory.length)
-                            }
-                            if (e.key === "Tab"){
-                                e.preventDefault()
-                            }
-                            if (e.key === "ArrowUp"){
-                                e.preventDefault()
-                                handlePreviousCommand()
-                            }
-                            if (e.key === "ArrowDown"){
-                                e.preventDefault()
-                                handleNextCommand()
-                            }
-
-                        }}
+                        onKeyDown={(e) => handleKeyDown(e, onCommand)}
                         onChange={(e) => {setInput(e.target.value); setCurrentCommand(e.target.value)}}
                     />
                 </div>
