@@ -37,10 +37,6 @@ export function TerminalInput ({
 
     }
 
-    useEffect (()=>{
-        setHistoryIndex(commandHistory.length)
-    }, [commandHistory.length])
-
     return (
         <div className="border-t main-border-color text-[12px]">
                 <div className="flex gap-2 px-3 p-5">
@@ -56,10 +52,13 @@ export function TerminalInput ({
                                 onCommand(input);
                                 setInput("");
                                 setCurrentCommand("")
+                                setHistoryIndex(commandHistory.length + 1)
                             }
                             if (e.ctrlKey && e.key === "l") {
                                 e.preventDefault()
                                 setInput("")
+                                setCurrentCommand("")
+                                setHistoryIndex(commandHistory.length)
                             }
                             if (e.key === "Tab"){
                                 e.preventDefault()
