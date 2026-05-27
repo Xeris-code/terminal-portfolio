@@ -1,6 +1,57 @@
 import { useState } from "react"
+import { getSystemFileItems, fileSystem } from "../content";
 
-export function useTerminalInput (commandHistory: string[]){
+type AutocompleteOptions = {
+  input: string;
+  commands: string[];
+  files: string[];
+  folders: string[];
+};
+
+type AutocompleteResult = {
+  completed?: string;
+  suggestions?: string[];
+};
+function getAutocomplete({
+  input,
+  commands,
+  files,
+  folders,
+}: AutocompleteOptions): AutocompleteResult {
+  const hasTrailingSpace = input.endsWith(" ");
+  const parts = input.split(/\s+/);
+  const command = parts[0] ?? "";
+  const arg = hasTrailingSpace ? "" : parts[1] ?? "";
+
+  if (!hasTrailingSpace && parts.length === 1) {
+    const matches = commands.filter((cmd) => cmd.startsWith(command));
+
+    if (matches.length === 1) return { completed: matches[0] };
+    if (matches.length > 1) return { suggestions: matches };
+
+    return {};
+  }
+
+  if (command === "cat") {
+    const matches = [...files].filter((item) =>
+      item.startsWith(arg)
+    );
+
+    if (matches.length === 1 && arg) return { completed: `cat ${matches[0]}` };
+    if (matches.length > 0) return { suggestions: matches };
+  }
+
+  if (command === "cd") {
+    const matches = folders.filter((folder) => folder.startsWith(arg));
+
+    if (matches.length === 1 && arg) return { completed: `cd ${matches[0].slice(0,-1)}` };
+    if (matches.length > 0) return { suggestions: matches.map(match => match.slice(0,-1)) };
+  }
+
+  return {};
+}
+
+export function useTerminalInput (commandHistory: string[], curr_path: string){
 
     const [input, setInput] = useState<string>("")  
     const [currentCommand, setCurrentCommand] = useState<string>("")
@@ -8,7 +59,8 @@ export function useTerminalInput (commandHistory: string[]){
 
     function handleKeyDown(
         e: React.KeyboardEvent<HTMLInputElement>,
-        onCommand: (command: string) => void
+        onCommand: (command: string) => void,
+        onSuggestions: (suggestions: string[]) => void
     ) {
 
         function handleClearInput(){
@@ -27,10 +79,6 @@ export function useTerminalInput (commandHistory: string[]){
             setInput("")
             setCurrentCommand("")
             setHistoryIndex(commandHistory.length)
-        }
-
-        function handleAutocomplete(){
-            e.preventDefault()
         }
 
         function handleNextCommand(){
@@ -66,9 +114,51 @@ export function useTerminalInput (commandHistory: string[]){
             case "Enter":
                 handleSubmit()
                 return
-            case "Tab":
-                handleAutocomplete()
-                return
+            case "Tab": {
+                e.preventDefault();
+
+                const files: string[] = []
+                const folders: string[] = []
+
+                getSystemFileItems(
+                    fileSystem,
+                    curr_path === "/"
+                        ? "/"
+                        : curr_path.slice(0,-1)
+                ).forEach((item) => {
+                    if (item.type === "") {
+                        folders.push(`${item.name}/`)
+                    } else {
+                        files.push(item.name)
+                    }
+                })
+
+                const result = getAutocomplete({
+                    input,
+                    commands: [
+                        "help",
+                        "whoami",
+                        "ls",
+                        "cd",
+                        "cat",
+                        "history",
+                        "clear"
+                    ],
+                    files,
+                    folders,
+                });
+
+                if (result.completed) {
+                    setInput(result.completed);
+                    setCurrentCommand(result.completed);
+                }
+
+                if (result.suggestions?.length) {
+                    onSuggestions(result.suggestions);
+                }
+
+                return;
+            }
             case "ArrowUp":
                 handlePreviousCommand()
                 return

@@ -37,6 +37,7 @@ export const techStackLines:TerminalEntry[] = [
     {type: "success", content: {key: "-", success: "filesystem modeling"}},
     {type: "success", content: {key: "-", success: "terminal UI systems"}},
     {type: "success", content: {key: "-", success: "responsive layouts"}},
+    {type: "success", content: {key: "-", success: "GUI tools automation testing using Squish"}},
     {type: "empty_line", content: {count:1}},
     {type: "system", content: {line: "Tools:"}},
     {type: "success", content: {key: "-", success: "Git"}},

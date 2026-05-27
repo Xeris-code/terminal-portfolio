@@ -8,7 +8,7 @@ export type TerminalOutput = {
     "asci": { lines: string[] },
     "empty_line": { count: number },
     "table": {columns: {left: string, right: string}[]},
-    "list_of_files": {folders: string[], files: string[]}
+    "list_of_files": {folders: string[], files: string[]},
 }
 
 export type TerminalEntry = {

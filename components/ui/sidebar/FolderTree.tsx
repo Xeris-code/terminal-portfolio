@@ -3,6 +3,7 @@ import { TreeFile } from "@/components/ui/sidebar"
 
 type FolderTreeProps = {
     label: string;
+    disabled: boolean;
     files: string[];
     active: boolean;
     activeFile: string;
@@ -10,7 +11,7 @@ type FolderTreeProps = {
 }
 
 export function FolderTree ({
-    label, files, active, activeFile,
+    label, disabled, files, active, activeFile,
     onClick
 }: FolderTreeProps) {
     return (
@@ -24,6 +25,7 @@ export function FolderTree ({
                     <TreeFile 
                         key={index}
                         label={file}
+                        disabled={disabled}
                         folder={label}
                         end={index + 1 === files.length ? true : false}
                         active={activeFile === `/${label}/${file}`}

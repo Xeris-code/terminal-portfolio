@@ -3,14 +3,14 @@ import { FileTree, FolderTree } from "../ui";
 import { fileSystem } from "@/lib/terminal";
 
 type SidebarProps = {
+  disabled: boolean;
   curr_file: string | null;
   curr_path: string;
   onClick: (command: string) => void
 }
 
 export function Sidebar({
-  curr_file,
-  curr_path,
+  disabled, curr_file, curr_path,
   onClick
 }: SidebarProps){
     return (
@@ -23,6 +23,7 @@ export function Sidebar({
                 file.type === "file"
                   ? <FileTree 
                       key={file.name}
+                      disabled={disabled}
                       label={file.name}
                       active={`/${file.name}` === curr_file}
                       onClick={onClick}
@@ -30,6 +31,7 @@ export function Sidebar({
                   </FileTree>
                   : <FolderTree
                       key={file.name}
+                      disabled={disabled}
                       label={file.name}
                       files={file.children.map((file) => (file.name))}
                       active={file.name === curr_path.replace(/\//g, "")}

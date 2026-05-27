@@ -1,14 +1,16 @@
-import { TerminalState } from "@/lib/types";
+import { TerminalState, TerminalAction } from "@/lib/types";
 import { TerminalInput, TerminalOutput } from "../terminal";
 
 type TerminalProps = {
+    disabled: boolean,
     terminal: TerminalState,
     onCommand: (command: string) => void,
+    dispatch: React.Dispatch<TerminalAction>,
 }
 
 export function Terminal({
-    terminal,
-    onCommand,
+    disabled, terminal,
+    onCommand, dispatch
 } :TerminalProps){
 
     
@@ -19,9 +21,21 @@ export function Terminal({
                 entries={terminal.terminalLines}
             />
             <TerminalInput
+                disabled={disabled}
                 curr_path={terminal.curr_path}
                 commandHistory={terminal.commandHistory}
                 onCommand={onCommand}
+                onSuggestions={(suggestions) => {
+                    dispatch({
+                        type: "ADD_TERMINAL_LINES",
+                        value: [
+                        {
+                            type: "list_of_files",
+                            content: { folders: [], files: suggestions }
+                        }
+                        ]
+                    })
+                }}
             />
         </div>
     )

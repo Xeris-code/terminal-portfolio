@@ -1,4 +1,4 @@
-import { TerminalAction, TerminalEntry, TerminalState, WebState } from "@/lib/types";
+import { TerminalAction, TerminalEntry, TerminalState } from "@/lib/types";
 import { fileSystem, getSystemFileItems, systemFilePaths, AvailableTextFileLines, availableFiles } from "../content";
 
 function addToHistory (command: string): TerminalAction {
@@ -127,8 +127,12 @@ function handleCat (file: string, path: string, dispatch: React.Dispatch<Termina
                 { type: "empty_line", content: {count: 1}}
             ]))
             setTimeout(() => {
-                dispatch(
-                    addToTerminal(availableFiles[resolvedPath as AvailableTextFileLines])
+                availableFiles[resolvedPath as AvailableTextFileLines].map((line, index) => 
+                    setTimeout(() => {
+                        dispatch(
+                            addToTerminal([line])
+                        )
+                    }, index*150)
                 )
             }, 1000)
         } else {

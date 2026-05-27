@@ -2,6 +2,7 @@ import { ArchitectureLine } from "./ArchitectureLine";
 
 type TreeFileProps = {
     label: string;
+    disabled: boolean;
     folder: string;
     end?: boolean;
     active?: boolean;
@@ -9,8 +10,7 @@ type TreeFileProps = {
 }
 
 export function TreeFile ({
-    label,
-    folder,
+    label, disabled, folder,
     end=false,
     active=false,
     onClick
@@ -20,6 +20,7 @@ export function TreeFile ({
             <ArchitectureLine end={end} active={active}/>
             <button
                 type="button"
+                disabled={disabled}
                 className="cursor-pointer flex items-center gap-3"
                 onClick={() => onClick(`cat /${folder}/${label}`)}
             >

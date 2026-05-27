@@ -2,6 +2,7 @@ import { NavMenu, NavMenuList } from "@/lib/types"
 import Image from "next/image"
 
 type NavBarProps = {
+    disabled: boolean;
     activeMenu: NavMenu;
     menuList: NavMenuList;
     onMenuChange: (value: NavMenu) => void;
@@ -9,7 +10,7 @@ type NavBarProps = {
 }
 
 export function NavBar ({
-    activeMenu, menuList,
+    disabled, activeMenu, menuList,
     onMenuChange, onClick
 }: NavBarProps){
     return (
@@ -21,7 +22,8 @@ export function NavBar ({
             <div className="flex gap-4">
             {menuList.map((menu, index) => (
               <button
-                key={index} 
+                key={index}
+                disabled={disabled} 
                 className={`relative cursor-pointer ${activeMenu === menu.type ? "text-[#62FF86] font-bold" : "hover:scale-[1.02]"}`}
                 onClick={() => {
                   onMenuChange(menu.type);

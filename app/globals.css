@@ -54,3 +54,18 @@ body {
 .non-active-menu-text {
   color: #4FC3F7;
 }
+
+.terminal-cursor {
+  color: #62FF86;
+  animation: terminal-blink 1s steps(1) infinite;
+}
+
+@keyframes terminal-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+
+  51%, 100% {
+    opacity: 0;
+  }
+}
