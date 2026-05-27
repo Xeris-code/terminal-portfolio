@@ -2,53 +2,53 @@ import { useState } from "react"
 import { getSystemFileItems, fileSystem } from "../content";
 
 type AutocompleteOptions = {
-  input: string;
-  commands: string[];
-  files: string[];
-  folders: string[];
+    input: string;
+    commands: string[];
+    files: string[];
+    folders: string[];
 };
 
 type AutocompleteResult = {
-  completed?: string;
-  suggestions?: string[];
+    completed?: string;
+    suggestions?: string[];
 };
 function getAutocomplete({
-  input,
-  commands,
-  files,
-  folders,
+    input,
+    commands,
+    files,
+    folders,
 }: AutocompleteOptions): AutocompleteResult {
-  const hasTrailingSpace = input.endsWith(" ");
-  const parts = input.split(/\s+/);
-  const command = parts[0] ?? "";
-  const arg = hasTrailingSpace ? "" : parts[1] ?? "";
+    const hasTrailingSpace = input.endsWith(" ");
+    const parts = input.split(/\s+/);
+    const command = parts[0] ?? "";
+    const arg = hasTrailingSpace ? "" : parts[1] ?? "";
 
-  if (!hasTrailingSpace && parts.length === 1) {
-    const matches = commands.filter((cmd) => cmd.startsWith(command));
+    if (!hasTrailingSpace && parts.length === 1) {
+        const matches = commands.filter((cmd) => cmd.startsWith(command));
 
-    if (matches.length === 1) return { completed: matches[0] };
-    if (matches.length > 1) return { suggestions: matches };
+        if (matches.length === 1) return { completed: matches[0] };
+        if (matches.length > 1) return { suggestions: matches };
+
+        return {};
+    }
+
+    if (command === "cat") {
+        const matches = [...files].filter((item) =>
+        item.startsWith(arg)
+        );
+
+        if (matches.length === 1 && arg) return { completed: `cat ${matches[0]}` };
+        if (matches.length > 0) return { suggestions: matches };
+    }
+
+    if (command === "cd") {
+        const matches = folders.filter((folder) => folder.startsWith(arg));
+
+        if (matches.length === 1 && arg) return { completed: `cd ${matches[0].slice(0,-1)}` };
+        if (matches.length > 0) return { suggestions: matches.map(match => match.slice(0,-1)) };
+    }
 
     return {};
-  }
-
-  if (command === "cat") {
-    const matches = [...files].filter((item) =>
-      item.startsWith(arg)
-    );
-
-    if (matches.length === 1 && arg) return { completed: `cat ${matches[0]}` };
-    if (matches.length > 0) return { suggestions: matches };
-  }
-
-  if (command === "cd") {
-    const matches = folders.filter((folder) => folder.startsWith(arg));
-
-    if (matches.length === 1 && arg) return { completed: `cd ${matches[0].slice(0,-1)}` };
-    if (matches.length > 0) return { suggestions: matches.map(match => match.slice(0,-1)) };
-  }
-
-  return {};
 }
 
 export function useTerminalInput (commandHistory: string[], curr_path: string){
