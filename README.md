@@ -20,6 +20,8 @@ Instead of a traditional portfolio layout, the entire UI is built around:
 
 The goal was to create a portfolio that feels like an actual system rather than a static webpage.
 
+![Terminal Portfolio]({F25A96EC-A2D8-4601-B44C-7630AC83018C}.png)
+
 ---
 
 ## Features
