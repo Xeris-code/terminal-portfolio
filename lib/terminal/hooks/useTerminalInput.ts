@@ -29,7 +29,7 @@ export function useTerminalInput (commandHistory: string[]){
             setHistoryIndex(commandHistory.length)
         }
 
-        function handleAutocompete(){
+        function handleAutocomplete(){
             e.preventDefault()
         }
 
@@ -67,7 +67,7 @@ export function useTerminalInput (commandHistory: string[]){
                 handleSubmit()
                 return
             case "Tab":
-                handleAutocompete()
+                handleAutocomplete()
                 return
             case "ArrowUp":
                 handlePreviousCommand()

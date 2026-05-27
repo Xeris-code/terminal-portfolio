@@ -1,42 +1,43 @@
 import { Lightbulb } from "lucide-react";
 import { FileTree, FolderTree } from "../ui";
+import { fileSystem } from "@/lib/terminal";
 
-export function Sidebar(){
+type SidebarProps = {
+  curr_file: string | null;
+  curr_path: string;
+  onClick: (command: string) => void
+}
+
+export function Sidebar({
+  curr_file,
+  curr_path,
+  onClick
+}: SidebarProps){
     return (
         <div className="flex flex-col py-4 h-full w-80 border main-border-color rounded-lg text-[12px] overflow-hidden">
             <div className="select-none border-b main-border-color pb-3">
               <span className="px-3"><span className="text-[#62FF86]">xeris</span>@portfolio:~/files</span>
             </div>
             <div className="px-5 py-5 flex flex-col gap-4 flex-1 overflow-y-auto noScroll">
-              <FolderTree
-                label="about"
-                files={["about.txt"]}
-                active={true}
-              />
-              <FolderTree
-                label="projects"
-                files={["cv-maker.txt", "portfolio.txt", "folderforge.txt"]}
-                active={false}
-              />
-              <FolderTree
-                label="skills"
-                files={["skills.txt", "languages.txt"]}
-                active={false}
-              />
-              <FolderTree
-                label="experience"
-                files={["experience.txt"]}
-                active={false}
-              />
-              <FolderTree
-                label="contact"
-                files={["contact.txt"]}
-                active={false}
-              />
-              <FileTree
-                label="readme.txt"
-                active={false}
-              />
+              {fileSystem.children.map((file) => (
+                file.type === "file"
+                  ? <FileTree 
+                      key={file.name}
+                      label={file.name}
+                      active={`/${file.name}` === curr_file}
+                      onClick={onClick}
+                    >
+                  </FileTree>
+                  : <FolderTree
+                      key={file.name}
+                      label={file.name}
+                      files={file.children.map((file) => (file.name))}
+                      active={file.name === curr_path.replace(/\//g, "")}
+                      activeFile={curr_file ?? ""}
+                      onClick={onClick}
+                    >
+                  </FolderTree>
+              ))}
               
             </div>
             <div className="select-none px-4 pt-4">

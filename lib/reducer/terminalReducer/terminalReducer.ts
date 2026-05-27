@@ -14,6 +14,10 @@ export function terminalStateReducer (state: TerminalState, action: TerminalActi
             return {...state, terminalLines: [...state.terminalLines, { type: "table", content: { columns: getHistoryLines(state.commandHistory)}}]}
         case "CLEAR_TERMINAL":
             return {...state, terminalLines: []}
+        case "SET_CURR_PATH":
+            return {...state, curr_path: action.value}
+        case "SET_CURR_FILE":
+            return {...state, curr_file: action.value}
         default:
             return state
     }

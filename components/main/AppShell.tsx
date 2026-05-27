@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 
-import { NavMenu } from "@/lib/types";
+import { NavMenu, NavMenuList } from "@/lib/types";
 import { initialWebState, webStateReducer, terminalStateReducer, initialTerminalState } from "@/lib/reducer/";
 import { WebLayout, NavBar, Sidebar, Terminal, Helpbar, Footer } from "@/components/main";
 import { useTerminalActions } from "@/lib/terminal";
@@ -13,15 +13,16 @@ export function AppShell () {
 
     const {
         handleCommand
-    } = useTerminalActions(dispatchTerminalState)
+    } = useTerminalActions(terminalState, dispatchTerminalState)
 
-    const NavMenuList: {type: NavMenu, label: string}[] = [
-        { type: "about", label: "_about" },
-        { type: "projects", label: "_projects" },
-        { type: "skills", label: "_skills" },
-        { type: "experience", label: "_experience" },
-        { type: "contact", label: "_contact" },
-        { type: "help", label: "_help" },
+    const NavMenuList: NavMenuList = [
+        { type: "whoami", label: "_whoami", command: ["whoami"] },
+        { type: "help", label: "_help", command: ["help"] },
+        { type: "about", label: "_about", command: ["cat /about.txt"] },
+        { type: "skills", label: "_skills", command: ["cd /skills"] },
+        { type: "projects", label: "_projects", command: ["cd /projects"] },
+        { type: "experience", label: "_experience", command: ["cat /experience.txt"] },
+        { type: "contact", label: "_contact", command: ["cat /contact.txt"] },
     ]
 
     return (
@@ -30,8 +31,13 @@ export function AppShell () {
                 activeMenu={webState.activeMenu}
                 menuList={NavMenuList}
                 onMenuChange={(value: NavMenu) => dispatchWebState({ type: "SET_ACTIVE_NAV_MENU", value: value })}
+                onClick={(command: string) => handleCommand(command)}
             />}
-            sidebar={<Sidebar/>}
+            sidebar={<Sidebar
+                curr_path={terminalState.curr_path}
+                curr_file={terminalState.curr_file}
+                onClick={(command: string) => handleCommand(command)}
+            />}
             terminal={<Terminal
                 terminal={terminalState}
                 onCommand={(command: string) => handleCommand(command)}

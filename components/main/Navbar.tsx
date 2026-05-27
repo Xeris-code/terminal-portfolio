@@ -5,11 +5,12 @@ type NavBarProps = {
     activeMenu: NavMenu;
     menuList: NavMenuList;
     onMenuChange: (value: NavMenu) => void;
+    onClick: (command: string) => void;
 }
 
 export function NavBar ({
     activeMenu, menuList,
-    onMenuChange
+    onMenuChange, onClick
 }: NavBarProps){
     return (
         <div className="select-none border-b main-border-color w-full flex items-center justify-between px-5 py-3 text-[14px]">
@@ -22,7 +23,11 @@ export function NavBar ({
               <button
                 key={index} 
                 className={`relative cursor-pointer ${activeMenu === menu.type ? "text-[#62FF86] font-bold" : "hover:scale-[1.02]"}`}
-                onClick={() => onMenuChange(menu.type)}>
+                onClick={() => {
+                  onMenuChange(menu.type);
+                  menu.command.map(cmd => onClick(cmd))
+                }}
+              >
                 {menu.label}
                 {activeMenu === menu.type && 
                   <div className="absolute translate-y-2.5 w-full h-px bg-[#62FF86]"/>

@@ -7,6 +7,8 @@ export const helpLines:TerminalEntry[] = [
         {left: "help", right: "Show available commands"},
         {left: "whoami", right: "Display profile information"},
         {left: "ls", right: "List available files"},
+        {left: "cd ..", right: "Move out of a folder"},
+        {left: "cd [folder]", right: "Move in a folder"},
         {left: "cat [file]", right: "Read a file"},
         {left: "history", right: "Show command history"},
         {left: "clear", right: "Clear terminal"},

@@ -1,0 +1,26 @@
+import { TerminalEntry } from "@/lib/types"
+
+export const aboutLines: TerminalEntry[]= [
+    {type: "system", content: {line: "Hey, I'm Peter — also known as Xeris."}},
+    {type: "system", content: {line: "I'm a V&V engineer focused on safety I&C systems and a developer passionate about building clean, interactive and useful software."}},
+    {type: "empty_line", content: {count:1}},
+    {type: "system", content: {line: "I enjoy creating:"}},
+    {type: "success", content: {key: "-", success: "terminal-inspired interfaces"}},
+    {type: "success", content: {key: "-", success: "automation tools"}},
+    {type: "success", content: {key: "-", success: "polished UI systems"}},
+    {type: "success", content: {key: "-", success: "developer-focused projects"}},
+    {type: "empty_line", content: {count:1}},
+    {type: "system", content: {line: "Current focus:"}},
+    {type: "success", content: {key: "-", success: "React / Next.js"}},
+    {type: "success", content: {key: "-", success: "TypeScript"}},
+    {type: "success", content: {key: "-", success: "UI architecture"}},
+    {type: "success", content: {key: "-", success: "automation & tooling"}},
+    {type: "empty_line", content: {count:1}},
+    {type: "system", content: {line: "Outside coding:"}},
+    {type: "success", content: {key: "-", success: "Linux"}},
+    {type: "success", content: {key: "-", success: "terminal workflows"}},
+    {type: "success", content: {key: "-", success: "system design"}},
+    {type: "success", content: {key: "-", success: "learning by building"}},
+    {type: "empty_line", content: {count:1}},
+    {type: "system", content: {line: "This portfolio itself is a custom interactive terminal built from scratch using React and TypeScript."}},
+]

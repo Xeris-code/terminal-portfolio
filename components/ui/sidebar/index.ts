@@ -1,4 +1,4 @@
 export * from "./ArchitectureLine"
-export * from "./RootFile"
+export * from "./TreeFile"
 export * from "./FolderTree"
 export * from "./FileTree"

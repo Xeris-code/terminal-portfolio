@@ -8,5 +8,7 @@ export type WebStateAction =
 export type TerminalAction =
     | { type: "ADD_TERMINAL_LINES", value: TerminalEntry[]} 
     | { type: "ADD_COMMAND_HISTORY", value: string}
+    | { type: "SET_CURR_PATH", value: string}
+    | { type: "SET_CURR_FILE", value: string | null}
     | { type: "PRINT_HISTORY"}
     | { type: "CLEAR_TERMINAL" }

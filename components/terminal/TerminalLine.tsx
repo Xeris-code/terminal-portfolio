@@ -1,5 +1,5 @@
 import { TerminalEntry } from "@/lib/types"
-import { AsciLine, ColoredKeyLine, CommandLine, EmptyLine, SystemLine, TableLine } from "./lines";
+import { AsciLine, ColoredKeyLine, CommandLine, EmptyLine, ListOfFiles, SystemLine, TableLine } from "./lines";
 
 type TerminalLineProps = {
     entry: TerminalEntry;
@@ -20,6 +20,8 @@ export function TerminalLine ({
             return <TableLine columns={entry.content.columns}/>
         case "empty_line":
             return <EmptyLine count={entry.content.count}/>
+        case "list_of_files":
+            return <ListOfFiles folders={entry.content.folders} files={entry.content.files}/>
         case "success":
             return <ColoredKeyLine type="success" placeholder={entry.content.key} message={entry.content.success}/>
         case "warning":

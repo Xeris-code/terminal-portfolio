@@ -15,6 +15,7 @@ export const initialTerminalState: TerminalState = {
 {type: "system", content: {line: "Type 'help' to begin."}},
     ],
     commandHistory: [],
-
+    curr_path: "/",
+    curr_file: null
 }
 

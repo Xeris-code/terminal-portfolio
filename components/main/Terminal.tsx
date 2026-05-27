@@ -1,5 +1,4 @@
 import { TerminalState } from "@/lib/types";
-import { useState } from "react"
 import { TerminalInput, TerminalOutput } from "../terminal";
 
 type TerminalProps = {
@@ -20,6 +19,7 @@ export function Terminal({
                 entries={terminal.terminalLines}
             />
             <TerminalInput
+                curr_path={terminal.curr_path}
                 commandHistory={terminal.commandHistory}
                 onCommand={onCommand}
             />

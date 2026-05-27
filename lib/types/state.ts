@@ -2,15 +2,17 @@ import { TerminalEntry } from "./terminal";
 
 export type NavMenu = 
     | "about"
-    | "projects"
     | "skills"
+    | "projects"
     | "experience"
     | "contact"
     | "help"
+    | "whoami"
 
 export type NavMenuList = {
     type: NavMenu,
     label: string,
+    command: string[],
 }[]
 
 export type WebState = {
@@ -20,4 +22,6 @@ export type WebState = {
 export type TerminalState = {
     terminalLines: TerminalEntry[];
     commandHistory: string[];
+    curr_path: string;
+    curr_file: string | null
 }
