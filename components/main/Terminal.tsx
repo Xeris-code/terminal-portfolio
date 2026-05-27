@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import { TerminalState, TerminalAction } from "@/lib/types";
-import { TerminalInput, TerminalOutput } from "../terminal";
+import { TerminalInput, TerminalOutput, TerminalInputRef } from "../terminal";
 
 type TerminalProps = {
     disabled: boolean,
@@ -13,10 +14,19 @@ export function Terminal({
     onCommand, dispatch
 } :TerminalProps){
 
-    
+    const inputRef = useRef<TerminalInputRef>(null)
+
+    function focusInput() {
+        requestAnimationFrame(() => {
+            inputRef.current?.focus()
+        })
+    }
 
     return (
-        <div className="flex flex-col min-w-0 flex-1 border main-border-color rounded-lg">
+        <div 
+            className="flex flex-col min-w-0 flex-1 border main-border-color rounded-lg"
+            onClick={focusInput}
+        >
             <TerminalOutput
                 entries={terminal.terminalLines}
             />
@@ -24,7 +34,7 @@ export function Terminal({
                 disabled={disabled}
                 curr_path={terminal.curr_path}
                 commandHistory={terminal.commandHistory}
-                onCommand={onCommand}
+                onCommand={(command) => {onCommand(command); focusInput()}}
                 onSuggestions={(suggestions) => {
                     dispatch({
                         type: "ADD_TERMINAL_LINES",
@@ -34,7 +44,9 @@ export function Terminal({
                             content: { folders: [], files: suggestions }
                         }
                         ]
-                    })
+                    });
+
+                    focusInput();
                 }}
             />
         </div>
