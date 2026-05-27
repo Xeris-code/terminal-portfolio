@@ -11,7 +11,7 @@ export function Footer (){
                 <a target="_blank" href="https://www.linkedin.com/in/xeris-code/">
                     <Image alt="linkedin" width={24} height={24} src="icons/linkedin.svg"/>
                 </a>
-                <a target="_blank" href="">
+                <a target="_blank" href="mailto:tvoj@email.com?subject=Portfolio contact">
                     <Image alt="mail" width={24} height={24} src="icons/mail.svg"/>
                 </a>
             </span>
